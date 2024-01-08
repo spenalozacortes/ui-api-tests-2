@@ -15,7 +15,6 @@
     </properties>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/com.github.aquality-automation/aquality-selenium -->
         <dependency>
             <groupId>com.github.aquality-automation</groupId>
             <artifactId>aquality-selenium</artifactId>
@@ -35,6 +34,13 @@
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>7.9.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.26</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
