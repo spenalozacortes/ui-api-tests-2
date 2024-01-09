@@ -1,5 +1,6 @@
 package pages;
 
+import aquality.selenium.elements.interfaces.IButton;
 import aquality.selenium.elements.interfaces.ILink;
 import aquality.selenium.forms.Form;
 import org.openqa.selenium.By;
@@ -8,6 +9,7 @@ import pages.forms.FooterForm;
 public class ProjectsPage extends Form {
 
     private final static String PROJECT_XPATH = "//a[text()='%s']";
+    private final IButton addBtn = getElementFactory().getButton(By.xpath("//a[@href='addProject']"), "Add project button");
     private final FooterForm footerForm = new FooterForm();
 
     public ProjectsPage() {
@@ -30,5 +32,9 @@ public class ProjectsPage extends Form {
     public String getProjectId(String projectName) {
         ILink projectLink = getProjectLink(projectName);
         return projectLink.getHref().split("=")[1];
+    }
+
+    public void clickAddBtn() {
+        addBtn.click();
     }
 }

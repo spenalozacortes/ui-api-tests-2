@@ -2,14 +2,16 @@ package tests;
 
 import config.CredentialsConfig;
 import config.EnvironmentConfig;
-import constants.Data;
+import constants.TestData;
 import models.TestResponse;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.AddProjectPage;
 import pages.ProjectsPage;
 import api.ApiSteps;
 import pages.ProjectPage;
 import utils.BrowserUtils;
+import utils.RandomUtils;
 import utils.TestUtils;
 
 import java.util.List;
@@ -24,6 +26,7 @@ public class UiApiTests extends BaseTest {
     private final ApiSteps apiSteps = new ApiSteps();
     private ProjectsPage projectsPage;
     private ProjectPage projectPage;
+    private AddProjectPage addProjectPage;
 
     @Test
     public void test() {
@@ -33,17 +36,27 @@ public class UiApiTests extends BaseTest {
         getBrowser().refresh();
 
         projectsPage = new ProjectsPage();
-        Assert.assertTrue(projectsPage.state().waitForDisplayed(), "All projects page not displayed");
-        Assert.assertTrue(projectsPage.footerForm().getVersionText().contains(Data.VARIANT), "Variant incorrect");
-        String projectId = projectsPage.getProjectId(Data.PROJECT_NAME);
-        projectsPage.clickProjectLink(Data.PROJECT_NAME);
+        Assert.assertTrue(projectsPage.state().waitForDisplayed(), "Projects page not displayed");
+        Assert.assertTrue(projectsPage.footerForm().getVersionText().contains(TestData.VARIANT), "Variant incorrect");
+        String projectId = projectsPage.getProjectId(TestData.PROJECT_NAME);
+        projectsPage.clickProjectLink(TestData.PROJECT_NAME);
 
         projectPage = new ProjectPage();
         Assert.assertTrue(projectPage.state().waitForDisplayed(), "Project page not displayed");
-        List<String> testDates = projectPage.getColumnData(Data.START_TIME_COLUMN);
+        List<String> testDates = projectPage.getColumnData(TestData.START_TIME_COLUMN);
         Assert.assertTrue(TestUtils.areTestsSortedDesc(testDates), "Tests on page are not sorted in descending order by date");
-        List<String> testNames = projectPage.getColumnData(Data.NAME_COLUMN);
+        List<String> testNames = projectPage.getColumnData(TestData.NAME_COLUMN);
         List<TestResponse> tests = apiSteps.getTests(projectId);
         Assert.assertTrue(TestUtils.areTestsContainedInResponse(testNames, tests), "Tests on page don't correspond to API response");
+
+        getBrowser().goBack();
+        Assert.assertTrue(projectsPage.state().waitForDisplayed(), "Projects page not displayed");
+        projectsPage.clickAddBtn();
+        getBrowser().tabs().switchToLastTab();
+        addProjectPage = new AddProjectPage();
+        String randomProjectName = RandomUtils.generateRandomString(TestData.PROJECT_NAME_LENGTH);
+        addProjectPage.setProjectName(randomProjectName);
+        addProjectPage.clickSaveProjectBtn();
+        Assert.assertTrue(addProjectPage.isSuccessAlertDisplayed(), "Saved project success alert not displayed");
     }
 }

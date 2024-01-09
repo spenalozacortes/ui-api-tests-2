@@ -1,6 +1,6 @@
 package api;
 
-import constants.Data;
+import constants.TestData;
 import constants.Endpoints;
 import constants.Parameters;
 import io.restassured.http.ContentType;
@@ -12,7 +12,7 @@ public class ApiSteps extends BaseSteps {
 
     public String getToken() {
         return getBaseReq()
-                .queryParam(Parameters.VARIANT, Data.VARIANT)
+                .queryParam(Parameters.VARIANT, TestData.VARIANT)
                 .when()
                 .post(Endpoints.GET_TOKEN)
                 .asString();
