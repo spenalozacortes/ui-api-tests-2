@@ -12,4 +12,8 @@ public class EnvironmentConfig {
     public static String getApiUri() {
         return ENVIRONMENT.getValue("/apiUri").toString();
     }
+
+    public static String getUrl() {
+        return ENVIRONMENT.getValue("/url").toString();
+    }
 }
