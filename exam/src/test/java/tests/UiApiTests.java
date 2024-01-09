@@ -40,8 +40,10 @@ public class UiApiTests extends BaseTest {
 
         projectPage = new ProjectPage();
         Assert.assertTrue(projectPage.state().waitForDisplayed(), "Project page not displayed");
-        List<String> dates = projectPage.getColumnData(Data.START_TIME_COLUMN);
-        Assert.assertTrue(TestUtils.areTestsSortedDesc(dates), "Tests are not sorted in descending order");
+        List<String> testDates = projectPage.getColumnData(Data.START_TIME_COLUMN);
+        Assert.assertTrue(TestUtils.areTestsSortedDesc(testDates), "Tests on page are not sorted in descending order by date");
+        List<String> testNames = projectPage.getColumnData(Data.NAME_COLUMN);
         List<TestResponse> tests = apiSteps.getTests(projectId);
+        Assert.assertTrue(TestUtils.areTestsContainedInResponse(testNames, tests), "Tests on page don't correspond to API response");
     }
 }
