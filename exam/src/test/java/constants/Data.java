@@ -6,4 +6,5 @@ import lombok.experimental.UtilityClass;
 public class Data {
     public static final String VARIANT = "2";
     public static final String PROJECT_NAME = "Nexage";
+    public static final String START_TIME_COLUMN = "4";
 }

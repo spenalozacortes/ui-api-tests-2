@@ -8,7 +8,9 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.ProjectsPage;
 import api.ApiSteps;
+import pages.ProjectPage;
 import utils.BrowserUtils;
+import utils.TestUtils;
 
 import java.util.List;
 
@@ -21,6 +23,7 @@ public class UiApiTests extends BaseTest {
     private static final String PASSWORD = CredentialsConfig.getPassword();
     private final ApiSteps apiSteps = new ApiSteps();
     private ProjectsPage projectsPage;
+    private ProjectPage projectPage;
 
     @Test
     public void test() {
@@ -30,11 +33,15 @@ public class UiApiTests extends BaseTest {
         getBrowser().refresh();
 
         projectsPage = new ProjectsPage();
-        Assert.assertTrue(projectsPage.state().waitForDisplayed(), "Projects page not displayed");
+        Assert.assertTrue(projectsPage.state().waitForDisplayed(), "All projects page not displayed");
         Assert.assertTrue(projectsPage.footerForm().getVersionText().contains(Data.VARIANT), "Variant incorrect");
         String projectId = projectsPage.getProjectId(Data.PROJECT_NAME);
         projectsPage.clickProjectLink(Data.PROJECT_NAME);
 
+        projectPage = new ProjectPage();
+        Assert.assertTrue(projectPage.state().waitForDisplayed(), "Project page not displayed");
+        List<String> dates = projectPage.getColumnData(Data.START_TIME_COLUMN);
+        Assert.assertTrue(TestUtils.areTestsSortedDesc(dates), "Tests are not sorted in descending order");
         List<TestResponse> tests = apiSteps.getTests(projectId);
     }
 }

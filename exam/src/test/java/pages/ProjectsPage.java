@@ -24,7 +24,7 @@ public class ProjectsPage extends Form {
 
     public void clickProjectLink(String projectName) {
         ILink projectLink = getProjectLink(projectName);
-        projectLink.clickAndWait();
+        projectLink.click();
     }
 
     public String getProjectId(String projectName) {
