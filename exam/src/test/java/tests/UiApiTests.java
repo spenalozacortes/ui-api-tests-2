@@ -32,8 +32,8 @@ public class UiApiTests extends BaseTest {
     public static final int TEST_NAME_LENGTH = CommonConstants.RANDOM_STRING_LENGTH;
     public static final int METHOD_NAME_LENGTH = CommonConstants.RANDOM_STRING_LENGTH;
     public static final int LOG_LENGTH = CommonConstants.RANDOM_STRING_LENGTH;
-    public static final String ENV = TestDataConfig.getEnv();
-    public static final String BROWSER = TestDataConfig.getBrowser();
+    public static final String ENV = EnvironmentConfig.getEnv();
+    public static final String BROWSER = EnvironmentConfig.getBrowser();
     private final ApiSteps apiSteps = new ApiSteps();
     private ProjectsPage projectsPage;
     private ProjectPage projectPage;

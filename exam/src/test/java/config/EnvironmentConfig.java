@@ -16,4 +16,12 @@ public class EnvironmentConfig {
     public static String getUrl() {
         return ENVIRONMENT.getValue("/url").toString();
     }
+
+    public static String getEnv() {
+        return ENVIRONMENT.getValue("/env").toString();
+    }
+
+    public static String getBrowser() {
+        return ENVIRONMENT.getValue("/browser").toString();
+    }
 }
