@@ -42,7 +42,7 @@ public class UiApiTests extends BaseTest {
         projectsPage.clickProjectLink(TestData.PROJECT_NAME);
 
         projectPage = new ProjectPage();
-        Assert.assertTrue(projectPage.state().waitForDisplayed(), "Project page not displayed");
+        projectPage.state().waitForDisplayed();
         List<String> testDates = projectPage.getColumnData(TestData.START_TIME_COLUMN);
         Assert.assertTrue(TestUtils.areTestsSortedDesc(testDates), "Tests on page are not sorted in descending order by date");
         List<String> testNames = projectPage.getColumnData(TestData.NAME_COLUMN);
@@ -50,13 +50,19 @@ public class UiApiTests extends BaseTest {
         Assert.assertTrue(TestUtils.areTestsContainedInResponse(testNames, tests), "Tests on page don't correspond to API response");
 
         getBrowser().goBack();
-        Assert.assertTrue(projectsPage.state().waitForDisplayed(), "Projects page not displayed");
+        projectsPage.state().waitForDisplayed();
         projectsPage.clickAddBtn();
         getBrowser().tabs().switchToLastTab();
         addProjectPage = new AddProjectPage();
+        addProjectPage.state().waitForDisplayed();
         String randomProjectName = RandomUtils.generateRandomString(TestData.PROJECT_NAME_LENGTH);
         addProjectPage.setProjectName(randomProjectName);
         addProjectPage.clickSaveProjectBtn();
         Assert.assertTrue(addProjectPage.isSuccessAlertDisplayed(), "Saved project success alert not displayed");
+        getBrowser().tabs().closeTab();
+        getBrowser().tabs().switchToLastTab();
+        projectsPage.state().waitForDisplayed();
+        getBrowser().refresh();
+        Assert.assertEquals(projectsPage.getProjectText(randomProjectName), randomProjectName, "New project not displayed");
     }
 }

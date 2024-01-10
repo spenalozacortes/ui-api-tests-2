@@ -34,6 +34,11 @@ public class ProjectsPage extends Form {
         return projectLink.getHref().split("=")[1];
     }
 
+    public String getProjectText(String projectName) {
+        ILink projectLink = getProjectLink(projectName);
+        return projectLink.getText();
+    }
+
     public void clickAddBtn() {
         addBtn.click();
     }
