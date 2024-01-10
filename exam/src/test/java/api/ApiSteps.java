@@ -50,4 +50,13 @@ public class ApiSteps extends BaseSteps {
                 .when()
                 .post(Endpoints.ADD_LOG_TO_TEST);
     }
+
+    public void addAttachmentToTest(String testId, String attachment, String contentType) {
+        getBaseReq()
+                .formParam(Parameters.TEST_ID, testId)
+                .formParam(Parameters.CONTENT, attachment)
+                .formParam(Parameters.CONTENT_TYPE, contentType)
+                .when()
+                .post(Endpoints.ADD_ATTACHMENT_TO_TEST);
+    }
 }

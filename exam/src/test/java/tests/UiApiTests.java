@@ -1,16 +1,17 @@
 package tests;
 
+import api.ApiSteps;
 import config.CredentialsConfig;
 import config.EnvironmentConfig;
 import config.TestDataConfig;
 import constants.CommonConstants;
 import models.TestResponse;
+import org.openqa.selenium.OutputType;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.AddProjectPage;
-import pages.ProjectsPage;
-import api.ApiSteps;
 import pages.ProjectPage;
+import pages.ProjectsPage;
 import utils.BrowserUtils;
 import utils.RandomUtils;
 import utils.TestUtils;
@@ -34,6 +35,7 @@ public class UiApiTests extends BaseTest {
     public static final int LOG_LENGTH = CommonConstants.RANDOM_STRING_LENGTH;
     public static final String ENV = EnvironmentConfig.getEnv();
     public static final String BROWSER = EnvironmentConfig.getBrowser();
+    public static final String CONTENT_TYPE_IMG = "image/png";
     private final ApiSteps apiSteps = new ApiSteps();
     private ProjectsPage projectsPage;
     private ProjectPage projectPage;
@@ -84,5 +86,7 @@ public class UiApiTests extends BaseTest {
         String testId = apiSteps.addTest(sid, randomProjectName, randomTestName, randomMethodName, ENV, BROWSER);
         String randomLog = RandomUtils.generateRandomString(LOG_LENGTH);
         apiSteps.addLogToTest(testId, randomLog);
+        String screenshot = getBrowser().getDriver().getScreenshotAs(OutputType.BASE64);
+        apiSteps.addAttachmentToTest(testId, screenshot, CONTENT_TYPE_IMG);
     }
 }

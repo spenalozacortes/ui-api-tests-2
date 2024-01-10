@@ -14,4 +14,5 @@ public class Parameters {
     public static final String BROWSER = "browser";
     public static final String TEST_ID = "testId";
     public static final String CONTENT = "content";
+    public static final String CONTENT_TYPE = "contentType";
 }
