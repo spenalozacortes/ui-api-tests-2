@@ -42,9 +42,9 @@ public class UiApiTests extends BaseTest {
     private AddProjectPage addProjectPage;
 
     @Test
-    public void test() {
+    public void uiApiTest() {
         BrowserUtils.navigateAndAuthorize(URL, USER, PASSWORD);
-        String token = apiSteps.getToken();
+        String token = apiSteps.getToken(VARIANT);
         BrowserUtils.addCookie(token);
         getBrowser().refresh();
 
