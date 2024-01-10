@@ -88,5 +88,6 @@ public class UiApiTests extends BaseTest {
         apiSteps.addLogToTest(testId, randomLog);
         String screenshot = getBrowser().getDriver().getScreenshotAs(OutputType.BASE64);
         apiSteps.addAttachmentToTest(testId, screenshot, CONTENT_TYPE_IMG);
+        Assert.assertTrue(projectPage.isTestDisplayed(testId), "New test not displayed on project page");
     }
 }
