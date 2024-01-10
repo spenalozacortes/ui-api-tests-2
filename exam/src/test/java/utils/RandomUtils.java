@@ -3,6 +3,7 @@ package utils;
 import lombok.experimental.UtilityClass;
 
 import java.util.Random;
+import java.util.UUID;
 
 @UtilityClass
 public class RandomUtils {
@@ -20,5 +21,9 @@ public class RandomUtils {
             randomString.append(randomChar);
         }
         return randomString.toString();
+    }
+
+    public static String generateSessionId() {
+        return UUID.randomUUID().toString();
     }
 }

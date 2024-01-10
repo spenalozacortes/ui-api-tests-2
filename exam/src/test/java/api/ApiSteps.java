@@ -29,4 +29,17 @@ public class ApiSteps extends BaseSteps {
                 .jsonPath()
                 .getList(ROOT_PATH, TestResponse.class);
     }
+
+    public String addTest(String sid, String projectName, String testName, String methodName, String env, String browser) {
+        return getBaseReq()
+                .queryParam(Parameters.SID, sid)
+                .queryParam(Parameters.PROJECT_NAME, projectName)
+                .queryParam(Parameters.TEST_NAME, testName)
+                .queryParam(Parameters.METHOD_NAME, methodName)
+                .queryParam(Parameters.ENV, env)
+                .queryParam(Parameters.BROWSER, browser)
+                .when()
+                .post(Endpoints.ADD_TEST)
+                .asString();
+    }
 }

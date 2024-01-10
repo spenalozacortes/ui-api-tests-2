@@ -16,4 +16,12 @@ public class TestDataConfig {
     public static String getProjectName() {
         return TEST_DATA.getValue("/projectName").toString();
     }
+
+    public static String getEnv() {
+        return TEST_DATA.getValue("/env").toString();
+    }
+
+    public static String getBrowser() {
+        return TEST_DATA.getValue("/browser").toString();
+    }
 }
