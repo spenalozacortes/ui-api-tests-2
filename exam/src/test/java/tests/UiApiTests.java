@@ -2,7 +2,8 @@ package tests;
 
 import config.CredentialsConfig;
 import config.EnvironmentConfig;
-import constants.TestData;
+import config.TestDataConfig;
+import constants.CommonConstants;
 import models.TestResponse;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -23,6 +24,11 @@ public class UiApiTests extends BaseTest {
     private static final String URL = EnvironmentConfig.getUrl();
     private static final String USER = CredentialsConfig.getUser();
     private static final String PASSWORD = CredentialsConfig.getPassword();
+    private static final String VARIANT = TestDataConfig.getVariant();
+    private static final String PROJECT_NAME = TestDataConfig.getProjectName();
+    public static final String START_TIME_COLUMN = "4";
+    public static final String TEST_NAME_COLUMN = "1";
+    public static final int PROJECT_NAME_LENGTH = CommonConstants.RANDOM_STRING_LENGTH;
     private final ApiSteps apiSteps = new ApiSteps();
     private ProjectsPage projectsPage;
     private ProjectPage projectPage;
@@ -37,15 +43,15 @@ public class UiApiTests extends BaseTest {
 
         projectsPage = new ProjectsPage();
         Assert.assertTrue(projectsPage.state().waitForDisplayed(), "Projects page not displayed");
-        Assert.assertTrue(projectsPage.footerForm().getVersionText().contains(TestData.VARIANT), "Variant incorrect");
-        String projectId = projectsPage.getProjectId(TestData.PROJECT_NAME);
-        projectsPage.clickProjectLink(TestData.PROJECT_NAME);
+        Assert.assertTrue(projectsPage.footerForm().getVersionText().contains(VARIANT), "Variant incorrect");
+        String projectId = projectsPage.getProjectId(PROJECT_NAME);
+        projectsPage.clickProjectLink(PROJECT_NAME);
 
         projectPage = new ProjectPage();
         projectPage.state().waitForDisplayed();
-        List<String> testDates = projectPage.getColumnData(TestData.START_TIME_COLUMN);
+        List<String> testDates = projectPage.getColumnData(START_TIME_COLUMN);
         Assert.assertTrue(TestUtils.areTestsSortedDesc(testDates), "Tests on page are not sorted in descending order by date");
-        List<String> testNames = projectPage.getColumnData(TestData.NAME_COLUMN);
+        List<String> testNames = projectPage.getColumnData(TEST_NAME_COLUMN);
         List<TestResponse> tests = apiSteps.getTests(projectId);
         Assert.assertTrue(TestUtils.areTestsContainedInResponse(testNames, tests), "Tests on page don't correspond to API response");
 
@@ -55,7 +61,7 @@ public class UiApiTests extends BaseTest {
         getBrowser().tabs().switchToLastTab();
         addProjectPage = new AddProjectPage();
         addProjectPage.state().waitForDisplayed();
-        String randomProjectName = RandomUtils.generateRandomString(TestData.PROJECT_NAME_LENGTH);
+        String randomProjectName = RandomUtils.generateRandomString(PROJECT_NAME_LENGTH);
         addProjectPage.setProjectName(randomProjectName);
         addProjectPage.clickSaveProjectBtn();
         Assert.assertTrue(addProjectPage.isSuccessAlertDisplayed(), "Saved project success alert not displayed");
@@ -64,5 +70,8 @@ public class UiApiTests extends BaseTest {
         projectsPage.state().waitForDisplayed();
         getBrowser().refresh();
         Assert.assertEquals(projectsPage.getProjectText(randomProjectName), randomProjectName, "New project not displayed");
+
+        projectsPage.clickProjectLink(randomProjectName);
+        projectPage.state().waitForDisplayed();
     }
 }
