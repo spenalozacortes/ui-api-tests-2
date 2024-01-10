@@ -31,6 +31,7 @@ public class UiApiTests extends BaseTest {
     public static final int PROJECT_NAME_LENGTH = CommonConstants.RANDOM_STRING_LENGTH;
     public static final int TEST_NAME_LENGTH = CommonConstants.RANDOM_STRING_LENGTH;
     public static final int METHOD_NAME_LENGTH = CommonConstants.RANDOM_STRING_LENGTH;
+    public static final int LOG_LENGTH = CommonConstants.RANDOM_STRING_LENGTH;
     public static final String ENV = TestDataConfig.getEnv();
     public static final String BROWSER = TestDataConfig.getBrowser();
     private final ApiSteps apiSteps = new ApiSteps();
@@ -81,5 +82,7 @@ public class UiApiTests extends BaseTest {
         String randomTestName = RandomUtils.generateRandomString(TEST_NAME_LENGTH);
         String randomMethodName = RandomUtils.generateRandomString(METHOD_NAME_LENGTH);
         String testId = apiSteps.addTest(sid, randomProjectName, randomTestName, randomMethodName, ENV, BROWSER);
+        String randomLog = RandomUtils.generateRandomString(LOG_LENGTH);
+        apiSteps.addLogToTest(testId, randomLog);
     }
 }

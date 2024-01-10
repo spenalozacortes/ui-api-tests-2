@@ -42,4 +42,12 @@ public class ApiSteps extends BaseSteps {
                 .post(Endpoints.ADD_TEST)
                 .asString();
     }
+
+    public void addLogToTest(String testId, String log) {
+        getBaseReq()
+                .queryParam(Parameters.TEST_ID, testId)
+                .queryParam(Parameters.CONTENT, log)
+                .when()
+                .post(Endpoints.ADD_LOG_TO_TEST);
+    }
 }

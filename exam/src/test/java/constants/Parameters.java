@@ -12,4 +12,6 @@ public class Parameters {
     public static final String METHOD_NAME = "methodName";
     public static final String ENV = "env";
     public static final String BROWSER = "browser";
+    public static final String TEST_ID = "testId";
+    public static final String CONTENT = "content";
 }
